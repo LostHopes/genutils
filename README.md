@@ -15,6 +15,7 @@ Commands ends with prefix with "g" to indicate genutils and don't conflict with 
 - [ ] get the all files and directories in the list by column (-l)
 - [ ] show hidden files (-h)
 - [ ] list directories recursively (-R)
+- [ ] output with colors
 
 ## cpg (copy files and/or directories)
 

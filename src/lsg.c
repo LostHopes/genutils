@@ -4,6 +4,8 @@
 #include <stdlib.h>
 #include "lsg.h"
 
+// TODO: add default sort method
+
 int listItems()
 {
     DIR *dir;
@@ -18,12 +20,10 @@ int listItems()
         exit(1);
     }
 
+    // Actual listing of directory with colors
     while ((items = readdir(dir)) != NULL)
     {
-        printf(
-            "%s ",
-            items->d_name
-        );
+        items->d_name[0] != '.' ? printf("\x1b[32;1m%s ", items->d_name) : 0;
     }
     printf("\n");
     
