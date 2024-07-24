@@ -17,7 +17,7 @@ int listItems()
     if ((dir = opendir(cwd_buf)) == NULL)
     {
         perror("Can't open directory");
-        exit(1);
+        exit(EXIT_FAILURE);
     }
 
     // Actual listing of directory with colors
@@ -28,7 +28,7 @@ int listItems()
     printf("\n");
     
     closedir(dir);
-
+    exit(EXIT_SUCCESS);
 }
 
 void showByColumn()

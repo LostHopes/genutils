@@ -1,6 +1,0 @@
-{
-    "files.associations": {
-        "lsg.h": "c",
-        "dirent.h": "c"
-    }
-}
