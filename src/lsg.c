@@ -1,16 +1,23 @@
 #include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <sys/stat.h>
+
 #include "lsg.h"
 
 // TODO: add default sort method
 
-void printItems(DIR *dir)
+void getItems(DIR *dir)
 {
-    struct dirent* items;
+    struct dirent *items;
     while ((items = readdir(dir)) != NULL)
     {
-        items->d_name[0] != '.' ? printf("\x1b[32;1m%s ", items->d_name) : 0;
+        items->d_name[0] != '.' ?
+        printf(
+            "\x1b[32;1m%s ",
+            items->d_name
+        ) 
+        : 0;
     }
     printf("\n");
 }
@@ -18,8 +25,8 @@ void printItems(DIR *dir)
 int listItems()
 {
     DIR *dir;
-
     char cwd_buf[BUFSIZ];
+
     getcwd(cwd_buf, BUFSIZ);
 
     if ((dir = opendir(cwd_buf)) == NULL)
@@ -28,10 +35,10 @@ int listItems()
         exit(EXIT_FAILURE);
     }
 
-    printItems(dir);
-    
+    getItems(dir);
+
     closedir(dir);
-    exit(EXIT_SUCCESS);
+    return EXIT_SUCCESS;
 }
 
 void showByColumn()
