@@ -41,6 +41,12 @@ int listItems()
     return EXIT_SUCCESS;
 }
 
+const char* getHelp()
+{
+    const char* help = "-a shows hidden files \
+    \n-l shows list column of files with detailed information";
+}
+
 void showByColumn()
 {
 }

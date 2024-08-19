@@ -6,11 +6,24 @@
 
 int main(int argc, char **argv)
 {
-    int option = getopt(argc, argv, "--help");
+    char option = getopt(argc, argv, "alh");
 
     // Lists an current directory if no arguments provided
-    if(option == -1){
+    switch (option)
+    {
+    case 'a':
+        break;
+    
+    case 'l':
+        break;
+    
+    case 'h':
+        printf("%s\n", getHelp());
+        break;
+    
+    case -1:
         listItems();
+        break;
     }
 
     exit(EXIT_SUCCESS);
