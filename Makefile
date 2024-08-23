@@ -1,16 +1,15 @@
 CC=gcc
 BINDIR=bin
-BINARY=genutils
-FILES=$(shell find . -name "*.c")
 
 all: build
-	$(CC) $(FILES) -o $(BINDIR)/$(BINARY)
+	$(CC) src/lsg.c -o $(BINDIR)/lsg
+	$(CC) src/cpg.c -o $(BINDIR)/cpg
 
 build:
 	mkdir -pv $(BINDIR)
 
 clean:
-	rm -r $(BINDIR)/$(BINARY)
+	rm -r $(BINDIR)
 
 run:
 	./$(BINDIR)/$(BINARY)
