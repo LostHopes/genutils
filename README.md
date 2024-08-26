@@ -1,7 +1,6 @@
 # What is genutils?
 
 Genutils is the attempt to rewrite some of the main GNU core utils.
-It's created for educational purposes and LICENSED under MIT. (See LICENSE file)
 Commands ends with prefix with "g" to indicate genutils and don't conflict with other commands.
 
 # The goals of genutils
@@ -23,4 +22,16 @@ Commands ends with prefix with "g" to indicate genutils and don't conflict with 
 - [ ] add verbose output (-v)
 - [ ] print amount of bytes copied
 
+# References
+
+[StackOverflow: Checking if a directory exists in Unix](https://stackoverflow.com/questions/3828192/checking-if-a-directory-exists-in-unix-system-call)
+
 # Examples
+
+# Contribution
+
+
+
+# License
+
+The project created for educational purposes and LICENSED under MIT. (See [LICENSE](LICENSE) file)

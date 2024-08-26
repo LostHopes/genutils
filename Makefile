@@ -1,9 +1,10 @@
 CC=gcc
 BINDIR=bin
+CFLAGS=-Wall -Wextra -pedantic
 
 all: build
-	$(CC) src/lsg.c -o $(BINDIR)/lsg
-	$(CC) src/cpg.c -o $(BINDIR)/cpg
+	$(CC) $(CFLAGS) src/lsg.c -o $(BINDIR)/lsg
+	$(CC) $(CFLAGS) src/cpg.c -o $(BINDIR)/cpg
 
 build:
 	mkdir -pv $(BINDIR)
