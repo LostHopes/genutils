@@ -20,25 +20,51 @@ void getItems(DIR *dir) {
     printf("\n");
 }
 
-int listItems() {
-    DIR *path;
+void getItemsByColumn(DIR *dir) {
+    struct dirent *items;
+    while ((items = readdir(dir)) != NULL) {
+        items->d_name[0] != '.' ?
+        printf(
+            "\x1b[32;1m %s \n",
+            items->d_name
+        )
+        : 0;
+    }
+}
+
+
+void showHidden(DIR *dir) {
+    struct dirent *items;
+    while ((items = readdir(dir)) != NULL) {
+        printf(
+            "\x1b[32;1m %s \n",
+            items->d_name
+        );
+    }
+}
+
+void showRecursively() {
+}
+
+int listItems(void (*itemFunc)()) {
+    DIR *dir;
     char cwd_buf[BUFSIZ];
 
     getcwd(cwd_buf, BUFSIZ);
 
-    if ((path = opendir(cwd_buf)) == NULL) {
+    if ((dir = opendir(cwd_buf)) == NULL) {
         perror("Can't open directory");
         exit(EXIT_FAILURE);
     }
 
-    getItems(path);
+    itemFunc(dir);
 
-    closedir(path);
+    closedir(dir);
     return EXIT_SUCCESS;
 }
 
 const char* getHelp() {
-    const char* help = "lsg listing files program \u00A9Arsen Melnychuk 2024\n\
+    const char* help = "lsg listing files program developed by \u00A9Arsen Melnychuk, 2024\n\
     \n-a\t shows hidden files \
     \n-l\t shows list column of files with detailed information \
     \n-R \t shows list of files inside the folders recursively";
@@ -52,39 +78,37 @@ bool isDir(const char* path) {
     return status;
 }
 
-void showByColumn() {
-}
-
-void showHidden() {
-}
-
-void showRecursively() {
-}
-
 int main(int argc, char **argv) {
     // Prints items in dir if no arguments
     if (argc == 1) {
-        listItems();
+        listItems(getItems);
         exit(EXIT_SUCCESS);
     }
 
-    char options = getopt(argc, argv, "alhR");
+    char options;
 
-    // Lists current directory if no arguments provided
-    switch (options) {
+    // FIXME: items will be printed 2 times if used double flags (e.g. -la)
 
-    case 'a':
-        break;
-    
-    case 'l':
-        break;
-    
-    case 'h':
-        printf("%s\n", getHelp());
-        break;
+    while((options = getopt(argc, argv, "alhR")) != -1) {
 
-    case 'R':
-        break;
+        // Lists current directory if no arguments provided
+        switch (options) {
+
+        case 'a':
+            listItems(showHidden);
+            break;
+
+        case 'l':
+            listItems(getItemsByColumn);
+            break;
+
+        case 'h':
+            printf("%s\n", getHelp());
+            break;
+
+        case 'R':
+            break;
+        }
     }
 
     exit(EXIT_SUCCESS);

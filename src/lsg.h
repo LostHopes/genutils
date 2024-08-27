@@ -5,6 +5,6 @@ const char *getHelp();
 int listItems();
 void getItems(DIR *dir);
 bool isDir(const char* path);
-void showByColumn();
+void getItemsByColumn();
 void showHidden();
 void showRecursively();

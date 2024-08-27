@@ -24,7 +24,8 @@ Commands ends with prefix with "g" to indicate genutils and don't conflict with 
 
 # References
 
-[StackOverflow: Checking if a directory exists in Unix](https://stackoverflow.com/questions/3828192/checking-if-a-directory-exists-in-unix-system-call)
+1. [StackOverflow: Checking if a directory exists in Unix](https://stackoverflow.com/questions/3828192/checking-if-a-directory-exists-in-unix-system-call)
+2. [What is mode_t in C?](https://jameshfisher.com/2017/02/24/what-is-mode_t/)
 
 # Examples
 
