@@ -1,8 +1,3 @@
-#include <unistd.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <sys/stat.h>
-
 #include "lsg.h"
 
 // TODO: add default sort method
@@ -20,12 +15,17 @@ void getItems(DIR *dir) {
     printf("\n");
 }
 
-void getItemsByColumn(DIR *dir) {
+void getByColumn(DIR *dir) {
     struct dirent *items;
+    struct stat sb;
+
     while ((items = readdir(dir)) != NULL) {
+        stat(items->d_name, &sb);
         items->d_name[0] != '.' ?
         printf(
-            "\x1b[32;1m %s \n",
+            "\x1b[32;1m %d %ld B %s \n",
+            sb.st_mode,
+            sb.st_size,
             items->d_name
         )
         : 0;
@@ -33,7 +33,18 @@ void getItemsByColumn(DIR *dir) {
 }
 
 
-void showHidden(DIR *dir) {
+void getHidden(DIR *dir) {
+    struct dirent *items;
+    while ((items = readdir(dir)) != NULL) {
+        printf(
+            "\x1b[32;1m %s ",
+            items->d_name
+        );
+    }
+    printf("\n");
+}
+
+void getHiddenByColumn(DIR *dir) {
     struct dirent *items;
     while ((items = readdir(dir)) != NULL) {
         printf(
@@ -43,10 +54,10 @@ void showHidden(DIR *dir) {
     }
 }
 
-void showRecursively() {
+void getRecursively() {
 }
 
-int listItems(void (*itemFunc)()) {
+int listDir(void (*itemFunc)()) {
     DIR *dir;
     char cwd_buf[BUFSIZ];
 
@@ -63,6 +74,17 @@ int listItems(void (*itemFunc)()) {
     return EXIT_SUCCESS;
 }
 
+bool isDir(const char* path) {
+    struct stat sb;
+    bool status = stat(path, &sb) == 0 && S_ISDIR(sb.st_mode);
+
+    return status;
+}
+
+void sortItems() {
+
+}
+
 const char* getHelp() {
     const char* help = "lsg listing files program developed by \u00A9Arsen Melnychuk, 2024\n\
     \n-a\t shows hidden files \
@@ -71,17 +93,10 @@ const char* getHelp() {
     return help;
 }
 
-bool isDir(const char* path) {
-    struct stat sb;
-    bool status = stat(path, &sb) == 0 && S_ISDIR(sb.st_mode);
-
-    return status;
-}
-
 int main(int argc, char **argv) {
     // Prints items in dir if no arguments
     if (argc == 1) {
-        listItems(getItems);
+        listDir(getItems);
         exit(EXIT_SUCCESS);
     }
 
@@ -89,17 +104,18 @@ int main(int argc, char **argv) {
 
     // FIXME: items will be printed 2 times if used double flags (e.g. -la)
 
+    // argument l and R have optional arguments
     while((options = getopt(argc, argv, "alhR")) != -1) {
 
         // Lists current directory if no arguments provided
         switch (options) {
 
         case 'a':
-            listItems(showHidden);
+            listDir(getHidden);
             break;
 
         case 'l':
-            listItems(getItemsByColumn);
+            listDir(getByColumn);
             break;
 
         case 'h':
@@ -108,7 +124,15 @@ int main(int argc, char **argv) {
 
         case 'R':
             break;
+
+        case '?':
+            exit(EXIT_FAILURE);
+            break;
+
+        default:
+            break;
         }
+
     }
 
     exit(EXIT_SUCCESS);
