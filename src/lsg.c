@@ -54,7 +54,9 @@ void getHiddenByColumn(DIR *dir) {
     }
 }
 
-void getRecursively() {
+void getRecursively(/*DIR *dir*/) {
+    // char buf[512];
+
 }
 
 int listDir(void (*itemFunc)()) {
@@ -85,12 +87,52 @@ void sortItems() {
 
 }
 
+void parseArgs(char options) {
+    
+    // Lists current directory if no arguments provided
+    switch (options) {
+
+    case 'a':
+        listDir(getHidden);
+        break;
+
+    case 'l':
+        listDir(getByColumn);
+        break;
+
+    case 'R':
+        break;
+
+    case 'h':
+        printf("%s\n", getHelp());
+        break;
+
+    case 'v':
+        printf("Version: %s\n", getVersion());
+        break;
+
+    case '?':
+        exit(EXIT_FAILURE);
+        break;
+
+    default:
+        break;
+    }
+
+}
+
 const char* getHelp() {
     const char* help = "lsg listing files program developed by \u00A9Arsen Melnychuk, 2024\n\
     \n-a\t shows hidden files \
     \n-l\t shows list column of files with detailed information \
     \n-R \t shows list of files inside the folders recursively";
     return help;
+}
+
+const char* getVersion() {
+    const char* version = "lsg listing files program developed by \u00A9Arsen Melnychuk, 2024\
+    \nCurrent version: 0.1";
+    return version;
 }
 
 int main(int argc, char **argv) {
@@ -105,34 +147,8 @@ int main(int argc, char **argv) {
     // FIXME: items will be printed 2 times if used double flags (e.g. -la)
 
     // argument l and R have optional arguments
-    while((options = getopt(argc, argv, "alhR")) != -1) {
-
-        // Lists current directory if no arguments provided
-        switch (options) {
-
-        case 'a':
-            listDir(getHidden);
-            break;
-
-        case 'l':
-            listDir(getByColumn);
-            break;
-
-        case 'h':
-            printf("%s\n", getHelp());
-            break;
-
-        case 'R':
-            break;
-
-        case '?':
-            exit(EXIT_FAILURE);
-            break;
-
-        default:
-            break;
-        }
-
+    while((options = getopt(argc, argv, "alhvR")) != -1) {
+        parseArgs(options);
     }
 
     exit(EXIT_SUCCESS);
