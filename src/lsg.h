@@ -14,4 +14,4 @@ void getByColumn();
 void getHidden();
 void getRecursively();
 void sortItems();
-void parseArgs(char options);
+void parseArgs(int argc, char** argv);

@@ -46,9 +46,13 @@ void getHidden(DIR *dir) {
 
 void getHiddenByColumn(DIR *dir) {
     struct dirent *items;
+    struct stat sb;
     while ((items = readdir(dir)) != NULL) {
+        stat(items->d_name, &sb);
         printf(
-            "\x1b[32;1m %s \n",
+            "\x1b[32;1m %d %ld B %s \n",
+            sb.st_mode,
+            sb.st_size,
             items->d_name
         );
     }
@@ -87,37 +91,48 @@ void sortItems() {
 
 }
 
-void parseArgs(char options) {
+void parseArgs(int argc, char** argv) {
     
     // Lists current directory if no arguments provided
-    switch (options) {
+    char options;
+    bool hidden, byColumn, recursively;
+    while((options = getopt(argc, argv, "lahvR")) != -1) {
+        switch (options) {
 
-    case 'a':
-        listDir(getHidden);
-        break;
+        case 'a':
+            hidden = true;
+            break;
 
-    case 'l':
-        listDir(getByColumn);
-        break;
+        case 'l':
+            byColumn = true;
+            break;
 
-    case 'R':
-        break;
+        case 'R':
+            recursively = true;
+            break;
 
-    case 'h':
-        printf("%s\n", getHelp());
-        break;
+        case 'h':
+            printf("%s\n", getHelp());
+            break;
 
-    case 'v':
-        printf("Version: %s\n", getVersion());
-        break;
-
-    case '?':
-        exit(EXIT_FAILURE);
-        break;
-
-    default:
-        break;
+        case 'v':
+            printf("Version: %s\n", getVersion());
+            break;
+        }
     }
+
+    if (hidden && byColumn) {
+        listDir(getHiddenByColumn);
+        return;
+    } else if (hidden) {
+        listDir(getHidden);
+    } else if (byColumn) {
+        listDir(getByColumn);
+        return;
+    } else if (recursively) {
+        return;
+    }
+    
 
 }
 
@@ -141,15 +156,8 @@ int main(int argc, char **argv) {
         listDir(getItems);
         exit(EXIT_SUCCESS);
     }
-
-    char options;
-
-    // FIXME: items will be printed 2 times if used double flags (e.g. -la)
-
-    // argument l and R have optional arguments
-    while((options = getopt(argc, argv, "alhvR")) != -1) {
-        parseArgs(options);
-    }
+    
+    parseArgs(argc, argv);
 
     exit(EXIT_SUCCESS);
 }
