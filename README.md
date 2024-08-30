@@ -11,8 +11,8 @@ Commands ends with prefix with "g" to indicate genutils and don't conflict with 
 
 ## lsg (list directories and files)
 
-- [ ] get the all files and directories in the list by column (-l)
-- [ ] show hidden files (-h)
+- [x] get the all files and directories in the list by column (-l)
+- [x] show hidden files (-a)
 - [ ] list directories recursively (-R)
 - [x] output with colors
 
