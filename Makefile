@@ -9,6 +9,9 @@ all: build
 build:
 	mkdir -pv $(BINDIR)
 
+install:
+
+
 clean:
 	rm -r $(BINDIR)
 

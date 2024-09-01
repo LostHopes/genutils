@@ -116,7 +116,7 @@ void parseArgs(int argc, char** argv) {
             break;
 
         case 'v':
-            printf("Version: %s\n", getVersion());
+            printf("%s\n", getVersion());
             break;
         }
     }
@@ -132,20 +132,22 @@ void parseArgs(int argc, char** argv) {
     } else if (recursively) {
         return;
     }
-    
 
 }
 
 const char* getHelp() {
-    const char* help = "lsg listing files program developed by \u00A9Arsen Melnychuk, 2024\n\
+    const char* help = "lsg listing files program developed by \u00A9Arsen Melnychuk, 2024\n \
     \n-a\t shows hidden files \
     \n-l\t shows list column of files with detailed information \
-    \n-R \t shows list of files inside the folders recursively";
+    \n-R \t shows list of files inside the folders recursively \
+    \n-v\t shows version \
+    \n-h\t shows help information";
     return help;
 }
 
 const char* getVersion() {
     const char* version = "lsg listing files program developed by \u00A9Arsen Melnychuk, 2024\
+    \nLicense: MIT\
     \nCurrent version: 0.1";
     return version;
 }
@@ -158,6 +160,8 @@ int main(int argc, char **argv) {
     }
     
     parseArgs(argc, argv);
+
+    // TODO: add feature to select path to list
 
     exit(EXIT_SUCCESS);
 }

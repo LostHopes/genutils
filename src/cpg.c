@@ -15,6 +15,9 @@ int main(int argc, char **argv) {
         case 'v':
 
             break;
+
+        case 'h':
+            break;
         }
     }
     
