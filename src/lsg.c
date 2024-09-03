@@ -35,6 +35,7 @@ void getByColumn(DIR *dir) {
 
 void getHidden(DIR *dir) {
     struct dirent *items;
+    
     while ((items = readdir(dir)) != NULL) {
         printf(
             "\x1b[32;1m %s ",
@@ -47,6 +48,7 @@ void getHidden(DIR *dir) {
 void getHiddenByColumn(DIR *dir) {
     struct dirent *items;
     struct stat sb;
+
     while ((items = readdir(dir)) != NULL) {
         stat(items->d_name, &sb);
         printf(
@@ -58,8 +60,7 @@ void getHiddenByColumn(DIR *dir) {
     }
 }
 
-void getRecursively(/*DIR *dir*/) {
-    // char buf[512];
+void getRecursively(DIR *dir) {
 
 }
 

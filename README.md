@@ -15,6 +15,7 @@ Commands ends with prefix with "g" to indicate genutils and don't conflict with 
 - [x] show hidden files (-a)
 - [ ] list directories recursively (-R)
 - [x] output with colors
+- [ ] sort items by default and select certain algorithm if argument is provided (-s)
 
 ## cpg (copy files and/or directories)
 
