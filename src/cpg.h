@@ -1,9 +1,6 @@
-#include <stdlib.h>
-#include <unistd.h>
-#include <fcntl.h>
-#include <stdbool.h>
-
 bool isDir(const char *path);
-void cpDir();
-void cpVerbose();
-void cpPrintBytes();
+void copyItem();
+const char* getHelp();
+void printVerbose();
+void printBytes();
+void parseArgs(int argc, char** argv);

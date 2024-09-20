@@ -1,3 +1,11 @@
+#include <dirent.h>
+#include <stdbool.h>
+#include <unistd.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <sys/stat.h>
+#include <string.h>
+
 #include "lsg.h"
 
 // TODO: add default sort method
@@ -35,7 +43,6 @@ void getByColumn(DIR *dir) {
 
 void getHidden(DIR *dir) {
     struct dirent *items;
-
     while ((items = readdir(dir)) != NULL) {
         printf(
             "\x1b[32;1m %s ",
@@ -89,7 +96,7 @@ bool isDir(const char* path) {
 }
 
 void sortItems() {
-
+    
 }
 
 void parseArgs(int argc, char** argv) {
@@ -119,6 +126,9 @@ void parseArgs(int argc, char** argv) {
         case 'v':
             printf("%s\n", getVersion());
             break;
+
+        default:
+            fprintf(stderr, "%s\n", getHelp());
         }
     }
 
