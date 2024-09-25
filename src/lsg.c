@@ -102,21 +102,28 @@ void sortItems() {
 void parseArgs(int argc, char** argv) {
     
     // Lists current directory if no arguments provided
+
+    struct {
+        bool hidden;
+        bool byColumn;
+        bool recursive;
+    } flag;
+    
+
     char options;
-    bool hidden, byColumn, recursively;
     while((options = getopt(argc, argv, "lahvR")) != -1) {
         switch (options) {
 
         case 'a':
-            hidden = true;
+            flag.hidden = true;
             break;
 
         case 'l':
-            byColumn = true;
+            flag.byColumn = true;
             break;
 
         case 'R':
-            recursively = true;
+            flag.recursive = true;
             break;
 
         case 'h':
@@ -132,15 +139,15 @@ void parseArgs(int argc, char** argv) {
         }
     }
 
-    if (hidden && byColumn) {
+    if (flag.hidden && flag.byColumn) {
         listDir(getHiddenByColumn);
         return;
-    } else if (hidden) {
+    } else if (flag.hidden) {
         listDir(getHidden);
-    } else if (byColumn) {
+    } else if (flag.byColumn) {
         listDir(getByColumn);
         return;
-    } else if (recursively) {
+    } else if (flag.recursive) {
         return;
     }
 

@@ -84,19 +84,25 @@ const char* usage() {
 
 void parseArgs(int argc, char** argv) {
 
+    struct
+    {
+        bool directory;
+        bool verbose;
+    } flag;
+    
+
     char options;
-    bool verbose, directory;
     while ((options = getopt(argc, argv, "rvh")) != -1)
     {
         switch (options)
         {
         
         case 'r':
-            directory = true;
+            flag.directory = true;
             break;
 
         case 'v':
-            verbose = true;
+            flag.verbose = true;
             break;
 
         case 'h':
@@ -110,11 +116,11 @@ void parseArgs(int argc, char** argv) {
             break;
         }
     }
-    if (directory && verbose) {
+    if (flag.directory && flag.verbose) {
 
-    } else if (directory) {
+    } else if (flag.directory) {
         
-    } else if (verbose) {
+    } else if (flag.verbose) {
         printf("Bytes written: %ld\n", copyFile(argv[2], argv[3]));
         exit(EXIT_SUCCESS);
     } else {
