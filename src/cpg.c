@@ -8,7 +8,10 @@
 #include "cpg.h"
 
 bool isDir(const char *path) {
-    return path;
+    struct stat sb;
+    bool status = stat(path, &sb) == 0 && S_ISDIR(sb.st_mode);
+
+    return status;
 }
 
 bool checkExists(const char *file) {
@@ -18,9 +21,12 @@ bool checkExists(const char *file) {
     return true;
 }
 
-void copyFile(const char* fileIn, const char* fileOut) {
+size_t copyFile(const char* fileIn, const char* dir) {
 
-    // TODO: write check if it's directory or file, then copy
+    if(isDir(fileIn)) {
+        fprintf(stderr, "cpg: Can't copy a directory %s, use -r flag instead\n", fileIn);
+        exit(EXIT_FAILURE);
+    }
 
     if(checkExists(fileIn)) {
         fprintf(stderr, "File %s doesn't exist\n", fileIn);
@@ -30,9 +36,8 @@ void copyFile(const char* fileIn, const char* fileOut) {
     FILE *fp_read = fopen(fileIn, "rb");
     char buffer[BUFSIZ];
 
-    if (!fp_read)
-    {
-        fprintf(stderr, "Couldn't open a file %s for reading\n", fileIn);
+    if (!fp_read) {
+        fprintf(stderr, "cpg: Couldn't open a file %s for reading\n", fileIn);
         exit(EXIT_FAILURE);
     }
     
@@ -40,45 +45,44 @@ void copyFile(const char* fileIn, const char* fileOut) {
     fclose(fp_read);
 
 
-    FILE *fp_write = fopen(fileOut, "wb");
+    FILE *fp_write = fopen(dir, "wb");
 
     if (!fp_write) {
-        fprintf(stderr, "Couldn't open a file %s for writing\n", fileOut);
+        fprintf(stderr, "cpg: Couldn't open a file %s for writing\n", dir);
         exit(EXIT_FAILURE);
     }
 
     size_t bytesWritten = fwrite(buffer, sizeof(char), bytesRead, fp_write);
 
     if (bytesWritten != bytesRead) {
-        fprintf(stderr, "Error copy of file %s\n", fileOut);
+        fprintf(stderr, "cpg: Error copy of file %s\n", dir);
         fclose(fp_write);
         exit(EXIT_FAILURE);
     }
 
     fclose(fp_write);
 
-    printf("Bytes copied %i\n", bytesWritten);
+    return bytesWritten;
 }
 
-void copyDir(const char* pathIn, const char* pathOut) {
+size_t copyDir(const char* pathIn, const char* pathOut) {
 
+    if (!isDir(pathIn)) {
+        copyFile(pathIn, pathOut);
+    }
+    
+
+    size_t bytesWritten = 0;
+
+    return bytesWritten;
 }
 
-void printBytes(const char* item) {
-
-}
-
-const char* getHelp() {
-    const char* help = "";
-    return help;   
+const char* usage() {
+    const char* help = "cpg: copy program developed by \u00A9Arsen Melnychuk, 2024";
+    return help;
 }
 
 void parseArgs(int argc, char** argv) {
-
-    if(argc > 3) {
-        fprintf(stderr, "Provided too many arguments \n");
-        exit(EXIT_FAILURE);
-    }
 
     char options;
     bool verbose, directory;
@@ -96,11 +100,13 @@ void parseArgs(int argc, char** argv) {
             break;
 
         case 'h':
-            printf("%s\n", getHelp());
+            printf("%s\n", usage());
+            exit(EXIT_SUCCESS);
             break;
         
         default:
-            fprintf(stderr, "%s\n", getHelp());
+            fprintf(stderr, "%s\n", usage());
+            exit(EXIT_FAILURE);
             break;
         }
     }
@@ -108,9 +114,13 @@ void parseArgs(int argc, char** argv) {
 
     } else if (directory) {
         
+    } else if (verbose) {
+        printf("Bytes written: %ld\n", copyFile(argv[2], argv[3]));
+        exit(EXIT_SUCCESS);
     } else {
 
     }
+
     copyFile(argv[1], argv[2]);
 }
 

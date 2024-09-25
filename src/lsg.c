@@ -120,7 +120,7 @@ void parseArgs(int argc, char** argv) {
             break;
 
         case 'h':
-            printf("%s\n", getHelp());
+            printf("%s\n", usage());
             break;
 
         case 'v':
@@ -128,7 +128,7 @@ void parseArgs(int argc, char** argv) {
             break;
 
         default:
-            fprintf(stderr, "%s\n", getHelp());
+            fprintf(stderr, "%s\n", usage());
         }
     }
 
@@ -146,7 +146,7 @@ void parseArgs(int argc, char** argv) {
 
 }
 
-const char* getHelp() {
+const char* usage() {
     const char* help = "lsg listing files program developed by \u00A9Arsen Melnychuk, 2024\n \
     \n-a\t shows hidden files \
     \n-l\t shows list column of files with detailed information \

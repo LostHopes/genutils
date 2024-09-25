@@ -1,4 +1,4 @@
-const char *getHelp();
+const char* usage();
 const char* getVersion();
 int listDir(void (*itemFunc)());
 void getItems(DIR* dir);

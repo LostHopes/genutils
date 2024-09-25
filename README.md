@@ -20,8 +20,8 @@ Commands ends with prefix with "g" to indicate genutils and don't conflict with 
 ## cpg (copy files and/or directories)
 
 - [ ] cp directory (-r)
-- [ ] add verbose output (-v)
-- [ ] print amount of bytes copied
+- [x] add verbose output (-v)
+- [x] print amount of bytes copied
 
 # References
 
