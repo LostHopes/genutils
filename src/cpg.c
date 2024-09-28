@@ -84,7 +84,7 @@ const char* usage() {
 
 void parseArgs(int argc, char** argv) {
 
-    struct
+    struct Flag
     {
         bool directory;
         bool verbose;

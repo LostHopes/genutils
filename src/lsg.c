@@ -71,7 +71,7 @@ void getRecursively(/*DIR *dir*/) {
 
 }
 
-int listDir(void (*itemFunc)()) {
+int listDir(void (*itemFunc)(DIR *dir)) {
     DIR *dir;
     char cwd_buf[BUFSIZ];
 
@@ -100,16 +100,14 @@ void sortItems() {
 }
 
 void parseArgs(int argc, char** argv) {
-    
-    // Lists current directory if no arguments provided
 
-    struct {
+    struct Flag {
         bool hidden;
         bool byColumn;
         bool recursive;
     } flag;
-    
 
+    // Lists current directory if no arguments provided
     char options;
     while((options = getopt(argc, argv, "lahvR")) != -1) {
         switch (options) {

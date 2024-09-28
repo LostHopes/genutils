@@ -23,17 +23,21 @@ Commands ends with prefix with "g" to indicate genutils and don't conflict with 
 - [x] add verbose output (-v)
 - [x] print amount of bytes copied
 
+# Known bugs
+
+## lsg
+
+## cpg
+
 # References
 
 1. [StackOverflow: Checking if a directory exists in Unix](https://stackoverflow.com/questions/3828192/checking-if-a-directory-exists-in-unix-system-call)
 2. [What is mode_t in C?](https://jameshfisher.com/2017/02/24/what-is-mode_t/)
 3. [How to pass function as parameter in C](https://stackoverflow.com/questions/9410/how-do-you-pass-a-function-as-a-parameter-in-c)
 4. [Stat function manual](https://pubs.opengroup.org/onlinepubs/7908799/xsh/sysstat.h.html)
-
-# Examples
+5. [Reddit: building cross-platform C programs](https://www.reddit.com/r/C_Programming/comments/132ma0u/how_do_you_build_crossplatform_c_programs/)
 
 # Contribution
-
 
 
 # License
