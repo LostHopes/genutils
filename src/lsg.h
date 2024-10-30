@@ -1,3 +1,5 @@
+#include <dirent.h>
+
 const char* usage();
 const char* getVersion();
 int listDir(void (*itemFunc)());

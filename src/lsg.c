@@ -1,11 +1,9 @@
-#include <dirent.h>
 #include <stdbool.h>
 #include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/stat.h>
 #include <string.h>
-
 #include "lsg.h"
 
 // TODO: add default sort method
@@ -13,12 +11,12 @@
 void getItems(DIR *dir) {
     struct dirent *items;
     while ((items = readdir(dir)) != NULL) {
-        items->d_name[0] != '.' ?
-        printf(
-            "\x1b[32;1m%s ",
-            items->d_name
-        ) 
-        : 0;
+        if (items->d_name[0] != '.') {
+            printf(
+                "\x1b[32;1m%s ",
+                items->d_name
+            );
+        }
     }
     printf("\n");
 }
@@ -26,17 +24,18 @@ void getItems(DIR *dir) {
 void getByColumn(DIR *dir) {
     struct dirent *items;
     struct stat sb;
+    char hiddenObject = '.';
 
     while ((items = readdir(dir)) != NULL) {
         stat(items->d_name, &sb);
-        items->d_name[0] != '.' ?
-        printf(
-            "\x1b[32;1m %d %ld B %s \n",
-            sb.st_mode,
-            sb.st_size,
-            items->d_name
-        )
-        : 0;
+        if (items->d_name[0] != hiddenObject) {
+            printf(
+                "\x1b[32;1m %d %ld B %s \n",
+                sb.st_mode,
+                sb.st_size,
+                items->d_name
+            );
+        }
     }
 }
 
@@ -99,16 +98,18 @@ void sortItems() {
     
 }
 
-void parseArgs(int argc, char** argv) {
-
-    struct Flag {
+typedef struct {
         bool hidden;
         bool byColumn;
         bool recursive;
-    } flag;
+} Flag;
+
+void parseArgs(int argc, char** argv) {
 
     // Lists current directory if no arguments provided
     char options;
+    Flag flag;
+
     while((options = getopt(argc, argv, "lahvR")) != -1) {
         switch (options) {
 
