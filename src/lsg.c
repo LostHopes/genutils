@@ -86,7 +86,7 @@ int listDir(void (*itemFunc)(DIR *dir)) {
     itemFunc(dir);
 
     closedir(dir);
-    return EXIT_SUCCESS;
+    exit(EXIT_SUCCESS);
 }
 
 int listDirWithPath(void (*itemFunc)(DIR *dir), char* path) {
@@ -165,15 +165,11 @@ void parseArgs(int argc, char** argv) {
 
     if (flag.hidden && flag.byColumn) {
         listDir(getHiddenByColumn);
-        exit(EXIT_SUCCESS);
     } else if (flag.hidden) {
         listDir(getHidden);
-        exit(EXIT_SUCCESS);
     } else if (flag.byColumn) {
         listDir(getByColumn);
-        exit(EXIT_SUCCESS);
     } else if (flag.recursive) {
-        exit(EXIT_SUCCESS);
     }
 }
 
