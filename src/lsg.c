@@ -10,8 +10,10 @@
 
 void getItems(DIR *dir) {
     struct dirent *items;
+    char hiddenObject = '.';
+
     while ((items = readdir(dir)) != NULL) {
-        if (items->d_name[0] != '.') {
+        if (items->d_name[0] != hiddenObject) {
             printf(
                 "\x1b[32;1m%s ",
                 items->d_name
@@ -71,7 +73,7 @@ void getRecursively(/*DIR *dir*/) {
 }
 
 int listDir(void (*itemFunc)(DIR *dir)) {
-    DIR *dir;
+    DIR* dir;
     char cwd_buf[BUFSIZ];
 
     getcwd(cwd_buf, BUFSIZ);
@@ -87,6 +89,20 @@ int listDir(void (*itemFunc)(DIR *dir)) {
     return EXIT_SUCCESS;
 }
 
+int listDirWithPath(void (*itemFunc)(DIR *dir), char* path) {
+    DIR* dir;
+    
+    if ((dir = opendir(path)) == NULL) {
+        perror("Can't open directory");
+        exit(EXIT_FAILURE);
+    }
+
+    itemFunc(dir);
+    closedir(dir);
+
+    return EXIT_SUCCESS;
+}
+
 bool isDir(const char* path) {
     struct stat sb;
     bool status = stat(path, &sb) == 0 && S_ISDIR(sb.st_mode);
@@ -94,7 +110,17 @@ bool isDir(const char* path) {
     return status;
 }
 
-void sortItems() {
+void sortItems(char* items) {
+
+    size_t len = strlen(items);
+
+    for (size_t i = 0; i < len; i++) {
+        for (size_t j = 0; j < len; j++) {
+            if (items[i] > items[j]) {
+
+            }
+        }
+    }
     
 }
 
@@ -106,7 +132,6 @@ typedef struct {
 
 void parseArgs(int argc, char** argv) {
 
-    // Lists current directory if no arguments provided
     char options;
     Flag flag;
 
@@ -177,6 +202,8 @@ int main(int argc, char **argv) {
     }
     
     parseArgs(argc, argv);
+
+    listDirWithPath(getItems, argv[1]);
 
     // TODO: add feature to select path to list
 
