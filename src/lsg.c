@@ -165,16 +165,16 @@ void parseArgs(int argc, char** argv) {
 
     if (flag.hidden && flag.byColumn) {
         listDir(getHiddenByColumn);
-        return;
+        exit(EXIT_SUCCESS);
     } else if (flag.hidden) {
         listDir(getHidden);
+        exit(EXIT_SUCCESS);
     } else if (flag.byColumn) {
         listDir(getByColumn);
-        return;
+        exit(EXIT_SUCCESS);
     } else if (flag.recursive) {
-        return;
+        exit(EXIT_SUCCESS);
     }
-
 }
 
 const char* usage() {
