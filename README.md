@@ -40,6 +40,8 @@ Commands ends with prefix with "g" to indicate genutils and don't conflict with 
 
 # Contribution
 
+If you have found bug, please describe it in the issues section or
+fork the project, fix an error and create pull request.
 
 # License
 
