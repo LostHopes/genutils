@@ -17,3 +17,6 @@ clean:
 
 run:
 	./$(BINDIR)/$(BINARY)
+
+
+check:

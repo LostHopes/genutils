@@ -1,4 +1,5 @@
 #include <dirent.h>
+#include <stdbool.h>
 
 const char* usage();
 const char* getVersion();
@@ -7,6 +8,6 @@ void getItems(DIR* dir);
 bool isDir(const char* path);
 void getByColumn(DIR* dir);
 void getHidden(DIR* dir);
-void getRecursively(/*DIR* dir*/);
+void getRecursively(DIR *dir);
 void sortItems();
 void parseArgs(int argc, char** argv);
