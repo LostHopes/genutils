@@ -13,12 +13,19 @@ void getItems(DIR *dir)
 {
   struct dirent *items;
   char hiddenObject = '.';
+  struct stat sb;
 
   while ((items = readdir(dir)) != NULL)
   {
     if (items->d_name[0] != hiddenObject)
     {
-      printf("\x1b[32;1m%s ", items->d_name);
+      stat(items->d_name, &sb);
+      if (S_ISDIR(sb.st_mode)) 
+      {
+        printf("\x1b[32;1m%s ", items->d_name);
+      } else {
+        printf("\x1b[0;31m%s ", items->d_name);
+      }
     }
   }
   printf("\n");
@@ -35,8 +42,13 @@ void getByColumn(DIR *dir)
     stat(items->d_name, &sb);
     if (items->d_name[0] != hiddenObject)
     {
-      printf("\x1b[32;1m %d %ld B %s \n", sb.st_mode, sb.st_size,
+      if (S_ISDIR(sb.st_mode)) {
+        printf("\x1b[32;1m %d %ldB %s \n", sb.st_mode, sb.st_size,
              items->d_name);
+      } else {
+        printf("\x1b[0;31m %d %ldB %s \n", sb.st_mode, sb.st_size,
+          items->d_name);
+      }
     }
   }
 }
@@ -44,9 +56,17 @@ void getByColumn(DIR *dir)
 void getHidden(DIR *dir)
 {
   struct dirent *items;
+  struct stat sb;
+
   while ((items = readdir(dir)) != NULL)
   {
-    printf("\x1b[32;1m %s ", items->d_name);
+    stat(items->d_name, &sb);
+      if (S_ISDIR(sb.st_mode)) 
+      {
+        printf("\x1b[32;1m%s ", items->d_name);
+      } else {
+        printf("\x1b[0;31m%s ", items->d_name);
+      }
   }
   printf("\n");
 }
@@ -59,7 +79,13 @@ void getHiddenByColumn(DIR *dir)
   while ((items = readdir(dir)) != NULL)
   {
     stat(items->d_name, &sb);
-    printf("\x1b[32;1m %d %ld B %s \n", sb.st_mode, sb.st_size, items->d_name);
+
+    if (S_ISDIR(sb.st_mode))
+    {
+      printf("\x1b[32;1m %d %ld B %s \n", sb.st_mode, sb.st_size, items->d_name);
+    } else {
+      printf("\x1b[0;31m %d %ld B %s \n", sb.st_mode, sb.st_size, items->d_name);
+    }
   }
 }
 
@@ -226,7 +252,7 @@ const char *getVersion()
 {
   return "lsg listing files program developed by ©Arsen Melnychuk, 2024"
          "\nLicense: MIT"
-         "\nCurrent version: 0.1";
+         "\nCurrent version: 0.1.0";
 }
 
 int main(int argc, char **argv)
