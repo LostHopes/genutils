@@ -30,13 +30,6 @@ Commands ends with prefix with "g" to indicate genutils and don't conflict with 
 - [ ] colorful output (-c, --colorful)
 - [ ] read from stdin
 
-# Known bugs
-
-## lsg
-
-## cpg
-
-## catg
 
 # Contribution
 
