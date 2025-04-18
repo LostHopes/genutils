@@ -4,7 +4,9 @@ CFLAGS=-Wall -Wextra -pedantic
 
 all: build
 	$(CC) $(CFLAGS) src/lsg.c -o $(BINDIR)/lsg
-	$(CC) $(CFLAGS) src/cpg.c -o $(BINDIR)/cpg
+
+release: build
+	$(CC) $(CFLAGS) -o2 src/lsg.c -o $(BINDIR)/lsg
 
 build:
 	mkdir -pv $(BINDIR)
@@ -16,7 +18,7 @@ clean:
 	rm -r $(BINDIR)
 
 run:
-	./$(BINDIR)/$(BINARY)
+	./$(BINDIR)/lsg
 
 
 check:
