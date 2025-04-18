@@ -93,14 +93,14 @@ void getRecursively(DIR *dir)
 {
     struct dirent *entry;
 
-    int dirFd = dirfd(dir);
-    if (dirFd == -1)
+    int fd = dirfd(dir);
+    if (fd == -1)
     {
         perror("Failed to get directory file descriptor");
         return;
     }
 
-    int isSubDir = (dirFd != AT_FDCWD);
+    int isSubDir = (fd != AT_FDCWD);
 
     while ((entry = readdir(dir)) != NULL)
     {
@@ -110,7 +110,7 @@ void getRecursively(DIR *dir)
         }
 
         struct stat entryStat;
-        if (fstatat(dirFd, entry->d_name, &entryStat, AT_SYMLINK_NOFOLLOW) == -1)
+        if (fstatat(fd, entry->d_name, &entryStat, AT_SYMLINK_NOFOLLOW) == -1)
         {
             perror("Error getting file stats");
             continue;
