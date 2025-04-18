@@ -14,9 +14,11 @@ jobs:
       - name: Build for Linux
         run: make
   
-  build-win:
-    runs-on: windows-latest
+  build-bsd:
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Build for Windows
-        run: make
+      - name: Build on FreeBSD
+        uses: vmactions/freebsd-vm@v1
+        with:
+          run: make
