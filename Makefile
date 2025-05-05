@@ -1,6 +1,6 @@
 CC=gcc
 BINDIR=bin
-CFLAGS=-Wall -Wextra -pedantic
+CFLAGS=-Wall -Wextra -pedantic -v
 
 all: build
 	$(CC) $(CFLAGS) src/lsg.c -o $(BINDIR)/lsg
