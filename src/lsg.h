@@ -3,7 +3,7 @@
 
 const char* usage();
 const char* getVersion();
-int listDir(void (*itemFunc)(), const char* path);
+int listDir(void (*itemFunc)(DIR *dir), const char* path);
 void getItems(DIR* dir);
 bool isDir(const char* path);
 void getByColumn(DIR* dir);

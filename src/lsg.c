@@ -7,7 +7,6 @@
 #include <unistd.h>
 #include <fcntl.h>
 
-// TODO: add default sort method
 
 void getItems(DIR *dir)
 {
@@ -61,12 +60,12 @@ void getHidden(DIR *dir)
   while ((items = readdir(dir)) != NULL)
   {
     stat(items->d_name, &sb);
-      if (S_ISDIR(sb.st_mode)) 
-      {
-        printf("\x1b[32;1m%s ", items->d_name);
-      } else {
-        printf("\x1b[0;31m%s ", items->d_name);
-      }
+    if (S_ISDIR(sb.st_mode)) 
+    {
+      printf("\x1b[32;1m%s ", items->d_name);
+    } else {
+      printf("\x1b[0;31m%s ", items->d_name);
+    }
   }
   printf("\n");
 }
