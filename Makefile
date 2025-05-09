@@ -1,24 +1,26 @@
-CC=gcc
-BINDIR=bin
-CFLAGS=-Wall -Wextra -pedantic -v
+CC = gcc
+CFLAGS = -Wall -Wextra -pedantic -v
+SRCDIR = src
+OBJDIR = obj
+BINDIR = bin
 
-all: build
-	$(CC) $(CFLAGS) src/lsg.c -o $(BINDIR)/lsg
+SRCS = $(wildcard $(SRCDIR)/*.c)
+OBJS = $(patsubst $(SRCDIR)/%.c, $(OBJDIR)/%.o, $(SRCS))
+TARGETS = $(patsubst $(SRCDIR)/%.c, $(BINDIR)/%, $(SRCS))
 
-release: build
-	$(CC) $(CFLAGS) -o2 src/lsg.c -o $(BINDIR)/lsg
+all: prepare $(TARGETS)
 
-build:
-	mkdir -pv $(BINDIR)
+$(BINDIR)/%: $(OBJDIR)/%.o
+	$(CC) $(CFLAGS) -o $@ $<
 
-install:
+$(OBJDIR)/%.o: $(SRCDIR)/%.c
+	$(CC) $(CFLAGS) -c $< -o $@
 
+prepare:
+	mkdir -pv $(OBJDIR) $(BINDIR)
 
 clean:
-	rm -r $(BINDIR)
-
-run:
-	./$(BINDIR)/lsg
+	rm -rf $(OBJDIR) $(BINDIR)
 
 
-check:
+.PHONY: all prepare clean
