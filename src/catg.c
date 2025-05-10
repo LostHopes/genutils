@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <getopt.h>
 #include <stdio.h>
+#include <sys/stat.h>
 #include "catg.h"
 
 struct Flags{
@@ -9,6 +10,16 @@ struct Flags{
 }flag;
 
 int getMetadata(const char* filename) {
+    struct stat sb;
+
+    if (stat(filename, &sb) == -1) {
+        perror("stat");
+        exit(EXIT_FAILURE);
+    }
+
+    fprintf(stdout, "File %s has %ld bytes\n", filename, sb.st_size);
+
+    return EXIT_SUCCESS;
 }
 
 int readFile(const char* filename) {
@@ -16,15 +27,15 @@ int readFile(const char* filename) {
     char buf[BUFSIZ];
 
     if (fd == -1) {
-        perror("Can't open a file or it doesn't exist");
-        return EXIT_FAILURE;
+        perror("open");
+        exit(EXIT_FAILURE);
     }
 
     ssize_t bytes_read = read(fd, buf, BUFSIZ);
 
     if(close(fd) == -1) {
-        perror("Can't close a file");
-        return EXIT_FAILURE;
+        perror("close");
+        exit(EXIT_FAILURE);
     }
 
     fprintf(stdout, "%s\n", buf);
@@ -43,9 +54,10 @@ int main(int argc, char** argv) {
         {"help", no_argument, 0, 'h'},
         {"colorful", no_argument, 0, 'c'},
         {"line-counter", no_argument, 0, 'n'},
+        {"metadata", required_argument, 0, 'm'},
     };
 
-    const char* short_options = "vhcn";
+    const char* short_options = "vhcnm:";
     int option_index = 0;
     int option = 0;
 
@@ -56,6 +68,9 @@ int main(int argc, char** argv) {
                 break;
             case 'c':
                 flag.colorful = true;
+                break;
+            case 'm':
+                getMetadata(optarg);
                 break;
             case 'v':
                 exit(EXIT_SUCCESS);
