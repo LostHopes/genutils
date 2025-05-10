@@ -13,7 +13,7 @@ int getMetadata(const char* filename) {
     struct stat sb;
 
     if (stat(filename, &sb) != -1) {
-        fprintf(stdout, "File %s has %ld bytes\n", filename, sb.st_size);
+        fprintf(stdout, "%s has %ld bytes\n", filename, sb.st_size);
     }
 
     return EXIT_SUCCESS;
