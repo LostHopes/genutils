@@ -8,6 +8,9 @@ struct Flags{
     bool line_counter;
 }flag;
 
+int getMetadata(const char* filename) {
+}
+
 int readFile(const char* filename) {
     int fd = open(filename, O_RDONLY);
     char buf[BUFSIZ];
@@ -64,7 +67,7 @@ int main(int argc, char** argv) {
         exit(EXIT_SUCCESS);
     }
 
-    for (size_t i = 1; i < argc; i++) {
+    for (int i = 1; i < argc; i++) {
         readFile(argv[i]);
     }
 
