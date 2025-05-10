@@ -12,12 +12,9 @@ struct Flags{
 int getMetadata(const char* filename) {
     struct stat sb;
 
-    if (stat(filename, &sb) == -1) {
-        perror("stat");
-        exit(EXIT_FAILURE);
+    if (stat(filename, &sb) != -1) {
+        fprintf(stdout, "File %s has %ld bytes\n", filename, sb.st_size);
     }
-
-    fprintf(stdout, "File %s has %ld bytes\n", filename, sb.st_size);
 
     return EXIT_SUCCESS;
 }
@@ -70,7 +67,11 @@ int main(int argc, char** argv) {
                 flag.colorful = true;
                 break;
             case 'm':
-                getMetadata(optarg);
+                int i = optind;
+                while (i <= sizeof(argv)) {
+                    getMetadata(argv[i]);
+                    i++;
+                }
                 break;
             case 'v':
                 exit(EXIT_SUCCESS);
