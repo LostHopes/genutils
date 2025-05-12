@@ -67,7 +67,7 @@ int main(int argc, char** argv) {
                 flag.colorful = true;
                 break;
             case 'm':
-                int i = optind;
+                long unsigned int i = optind;
                 while (i <= sizeof(argv)) {
                     getMetadata(argv[i]);
                     i++;
