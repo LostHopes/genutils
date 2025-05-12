@@ -1,13 +1,14 @@
+#include "catg.h"
 #include <stdlib.h>
 #include <getopt.h>
-#include <stdio.h>
 #include <sys/stat.h>
-#include "catg.h"
 
 struct Flags{
     bool colorful;
     bool line_counter;
 }flag;
+
+char buf[BUFSIZ];
 
 int getMetadata(const char* filename) {
     struct stat sb;
@@ -19,9 +20,14 @@ int getMetadata(const char* filename) {
     return EXIT_SUCCESS;
 }
 
-int readFile(const char* filename) {
+void getLineCounter() {
+    int firstLine = 1;
+
+    // Idea: read one line and append number before it in a loop
+}
+
+const char* readFile(const char* filename) {
     int fd = open(filename, O_RDONLY);
-    char buf[BUFSIZ];
 
     if (fd == -1) {
         perror("open");
@@ -34,9 +40,7 @@ int readFile(const char* filename) {
         perror("close");
         exit(EXIT_FAILURE);
     }
-
-    fprintf(stdout, "%s\n", buf);
-    return EXIT_SUCCESS;
+    return buf;
 }
 
 int main(int argc, char** argv) {
@@ -84,7 +88,7 @@ int main(int argc, char** argv) {
     }
 
     for (int i = 1; i < argc; i++) {
-        readFile(argv[i]);
+        fprintf(stdout, "%s\n", readFile(argv[i]));
     }
 
     exit(EXIT_SUCCESS);
