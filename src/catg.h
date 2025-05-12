@@ -8,3 +8,5 @@ struct Flags{
 
 int readFile(const char* filename);
 int getMetadata(const char* filename);
+void getLineCounter();
+void printColorfulOutput();
