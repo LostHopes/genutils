@@ -8,7 +8,7 @@ struct Flags{
 }flag;
 extern char buf[BUFSIZ];
 
-const char* readFile(const char* filename);
+char* readFile(const char* filename);
 int getMetadata(const char* filename);
-void getLineCounter();
+void getLineCounter(const char* filename);
 void printColorfulOutput();
