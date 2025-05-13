@@ -64,7 +64,7 @@ char* readFile(const char* filename) {
         exit(EXIT_FAILURE);
     }
 
-    ssize_t total_read = 0;
+    size_t total_read = 0;
     while (total_read < filesize) {
         ssize_t bytes_read = read(fd, buffer + total_read, filesize - total_read);
         if (bytes_read <= 0) {
