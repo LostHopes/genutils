@@ -18,27 +18,72 @@ int getMetadata(const char* filename) {
     return EXIT_SUCCESS;
 }
 
-void getLineCounter() {
-    int firstLine = 1;
+void getLineCounter(const char* filename) {
+    char* local_buf = readFile(filename);
+    if (!local_buf) return;
 
-    // Idea: read one line and append number before it in a loop
+    int line_number = 1;
+    char* pointer = local_buf;
+    char* line_start = pointer;
+
+    while (*pointer) {
+        if (*pointer == '\n') {
+            *pointer = '\0';
+            fprintf(stdout, "%d\t%s\n", line_number++, line_start);
+            *pointer = '\n';
+            line_start = pointer + 1;
+        }
+        pointer++;
+    }
+    if (line_start < pointer) {
+        fprintf(stdout, "%d\t%s\n", line_number++, line_start);
+    }
+
+    free(local_buf);
 }
 
-const char* readFile(const char* filename) {
+char* readFile(const char* filename) {
     int fd = open(filename, O_RDONLY);
-
     if (fd == -1) {
         perror("open");
         exit(EXIT_FAILURE);
     }
 
-    ssize_t bytes_read = read(fd, buf, BUFSIZ);
-
-    if(close(fd) == -1) {
-        perror("close");
+    struct stat st;
+    if (fstat(fd, &st) == -1) {
+        perror("fstat");
+        close(fd);
         exit(EXIT_FAILURE);
     }
-    return buf;
+
+    size_t filesize = st.st_size;
+    char* buffer = malloc(filesize + 1);
+    if (!buffer) {
+        perror("malloc");
+        close(fd);
+        exit(EXIT_FAILURE);
+    }
+
+    ssize_t total_read = 0;
+    while (total_read < filesize) {
+        ssize_t bytes_read = read(fd, buffer + total_read, filesize - total_read);
+        if (bytes_read <= 0) {
+            perror("read");
+            free(buffer);
+            close(fd);
+            exit(EXIT_FAILURE);
+        }
+        total_read += bytes_read;
+    }
+    buffer[filesize] = '\0';
+
+    if (close(fd) == -1) {
+        perror("close");
+        free(buffer);
+        exit(EXIT_FAILURE);
+    }
+
+    return buffer;
 }
 
 int main(int argc, char** argv) {
