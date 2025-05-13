@@ -199,11 +199,11 @@ void parseArgs(int argc, char **argv)
       flag.recursive = true;
       break;
     case 'h':
-      printf("%s\n", usage());
+      fprintf(stdout, "%s\n", usage());
       exit(EXIT_SUCCESS);
       break;
     case 'v':
-      printf("%s\n", getVersion());
+      fprintf(stdout, "%s\n", getVersion());
       exit(EXIT_SUCCESS);
       break;
     default:
