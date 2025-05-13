@@ -26,7 +26,7 @@ Commands ends with prefix with "g" to indicate genutils and don't conflict with 
 
 ## catg (read the files and print their context)
 
-- [ ] line counter (-n, --line-counter)
+- [x] line counter (-n, --line-counter)
 - [ ] colorful output (-c, --colorful)
 - [ ] read from stdin
 
