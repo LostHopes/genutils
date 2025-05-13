@@ -6,7 +6,8 @@
 struct Flags{
     bool colorful;
     bool line_counter;
-}flag;
+};
+extern struct Flags flag;
 extern char buf[BUFSIZ];
 
 char* readFile(const char* filename);

@@ -3,10 +3,7 @@
 #include <getopt.h>
 #include <sys/stat.h>
 
-struct Flags{
-    bool colorful;
-    bool line_counter;
-}flag;
+struct Flags flag;
 
 int getMetadata(const char* filename) {
     struct stat sb;
