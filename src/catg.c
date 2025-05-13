@@ -109,15 +109,17 @@ int main(int argc, char** argv) {
         switch (option) {
             case 'n':
                 flag.line_counter = true;
+                
+                for (int i = 2; i < argc; i++) {
+                    getLineCounter(argv[i]);
+                }
                 break;
             case 'c':
                 flag.colorful = true;
                 break;
             case 'm':
-                long unsigned int i = optind;
-                while (i <= sizeof(argv)) {
+                for (int i = 1; i < argc; i++) {
                     getMetadata(argv[i]);
-                    i++;
                 }
                 break;
             case 'v':
