@@ -8,8 +8,6 @@ struct Flags{
     bool line_counter;
 }flag;
 
-char buf[BUFSIZ];
-
 int getMetadata(const char* filename) {
     struct stat sb;
 
