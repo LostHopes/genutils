@@ -97,11 +97,11 @@ int main(int argc, char** argv) {
         {"version", no_argument, 0, 'v'},
         {"help", no_argument, 0, 'h'},
         {"colorful", no_argument, 0, 'c'},
-        {"line-counter", no_argument, 0, 'n'},
+        {"line-counter", required_argument, 0, 'n'},
         {"metadata", required_argument, 0, 'm'},
     };
 
-    const char* short_options = "vhcnm:";
+    const char* short_options = "vhcn:m:";
     int option_index = 0;
     int option = 0;
 
