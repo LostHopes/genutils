@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include <getopt.h>
 #include <sys/stat.h>
+#include <unistd.h>
+#include <fcntl.h>
 
 struct Flags flag;
 
