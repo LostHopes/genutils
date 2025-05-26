@@ -1,3 +1,6 @@
+#ifndef CATG_H
+#define CATG_H
+
 #include <stdio.h>
 #include <stdbool.h>
 
@@ -10,3 +13,5 @@ extern struct Flags flag;
 char* readFile(const char* filename);
 int getMetadata(const char* filename);
 void getLineCounter(const char* filename);
+
+#endif

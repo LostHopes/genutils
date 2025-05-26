@@ -1,3 +1,6 @@
+#ifndef LSG_H
+#define LSG_H
+
 #include <dirent.h>
 #include <stdbool.h>
 
@@ -11,3 +14,5 @@ void getHidden(DIR* dir);
 void getRecursively(DIR *dir);
 void sortItems();
 void parseArgs(int argc, char** argv);
+
+#endif
