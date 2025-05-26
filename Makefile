@@ -30,6 +30,6 @@ install: all
 	install -m 755 $(TARGETS) $(INSTALLDIR)
 
 clean:
-	rm -rf $(OBJDIR) $(BINDIR)
+	@rm -rf $(OBJDIR) $(BINDIR)
 
 .PHONY: all prepare clean install
